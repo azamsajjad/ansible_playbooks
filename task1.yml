@@ -1,0 +1,16 @@
+---
+- hosts: web
+  tasks: 
+    - file:
+        path: /tmp/testdir
+        state: directory
+    - copy: 
+        src: /etc/fstab
+        dest: /tmp/testdir
+    - yum:
+        name: httpd
+    - service:
+        name: httpd
+        state: started
+        enabled: true
+...

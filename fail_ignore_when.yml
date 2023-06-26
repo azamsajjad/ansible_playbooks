@@ -1,0 +1,21 @@
+---
+- name: check status of cockpit service and start it if it is inactive
+  hosts: web
+  tasks:
+    - name: check status of cockpit service
+      command: systemctl is-active cockpit.socket
+      register: abc
+      ignore_errors: yes
+    - debug:
+        msg: "{{ abc }}"
+    - name: start the cockpit socket if it is inactive
+      service:
+        name: cockpit.socket
+        state: started
+      when: abc.rc != 0
+    - name: restarting cockpit socket if it is already running
+      service:
+        name: cockpit.socket
+        state: restarted
+      when: abc.rc == 0
+...

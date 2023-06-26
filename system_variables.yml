@@ -1,0 +1,7 @@
+---
+- hosts: web
+  tasks:
+    - name: Ansible Built-in Variables Playbook Task
+      debug: 
+        msg: "{{ hostvars  }}"
+...

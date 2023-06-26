@@ -1,0 +1,22 @@
+---
+- name: Using Nested loops as we wish to add users to more than 1 group
+  hosts: web
+  tasks:
+    - name: adding groups first
+      group:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - datagroup
+        - itgroup
+        - hrgroup
+    - name: Creating users 
+      user:
+        name: "{{ item[0] }}"
+        state: absent
+        groups: "{{ item[1] }}"
+        append: yes
+      with_nested:
+        - { azam5, hassan5, faizi5, shahrukh5, azaan5, haider5, hussain5 }
+        - { datagroup, itgroup, hrgroup }
+

@@ -1,0 +1,10 @@
+---
+- name: Example of Registered Variables
+  hosts: web
+  tasks:
+    - name: check the machine hostname
+      command: hostname
+      register: abc
+
+    - debug:
+        var: abc.stdout

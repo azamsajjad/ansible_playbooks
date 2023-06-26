@@ -1,0 +1,10 @@
+---
+- name: ignore errors example
+  hosts: web
+  tasks:
+    - name: checking cockpit service status
+      command: systemctl is-active cockpit.socket
+      register: abc
+      ignore_errors: yes
+    - debug:
+        msg: "{{ abc }}"

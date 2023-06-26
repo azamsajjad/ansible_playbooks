@@ -1,0 +1,16 @@
+---
+- name: Registering the variable in Ansible
+  hosts: node2
+  tasks:
+    - name: installing httpd package
+      yum:
+        name: httpd
+        state: installed
+
+    - name: checking apache version and storing it in ver variable
+      command: httpd -v
+      register: ver
+
+    - debug:
+        var: ver.stdout
+

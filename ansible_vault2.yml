@@ -1,0 +1,10 @@
+---
+- name: Ansible Vault with encrypted file
+  hosts: web
+  vars_files:
+    - /home/ansible/crypt.yml
+  tasks:
+    - name: Creating user account
+      user:
+        name: Trump
+        password: "{{ pw }}"

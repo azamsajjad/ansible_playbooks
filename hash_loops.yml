@@ -1,0 +1,15 @@
+---
+- name: Adding users in bulk but each have different group
+  hosts: web
+  tasks:
+    - name: adding users
+      user:
+        name: "{{ item.name }}"
+        state: absent
+        groups: "{{ item.groups }}"
+      loop:
+        - { name: 'azam3' , groups: wheel }
+        - { name: 'hassan3' , groups: root }
+        - { name: 'faizi3' , groups: wheel }
+        - { name: 'shahrukh3' , groups: root }
+

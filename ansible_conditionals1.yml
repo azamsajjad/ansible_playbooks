@@ -1,0 +1,7 @@
+---
+- name: Ansible Conditionals using Ansible facts
+  hosts: web
+  tasks:
+    - name: print information depending on OS type
+      shell: echo "This is Redhat Machine"
+      when: ansible_distribution == "RedHat"

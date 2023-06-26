@@ -1,0 +1,14 @@
+---
+- name: install epel repo on nodes, if couldnt, then copy from src to nodes
+  hosts: web
+  tasks:
+    - block:
+        - name: install epel repo
+          command: sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm.fail
+        - name: verify that it is installed
+          shell: ls /etc/yum.repos.d/epel.repo
+      rescue:
+        - name: copy epel repo from source node
+          copy:
+            src: /tmp/epel.repo
+            dest: /etc/yum.repos.d/epel.repo

@@ -1,0 +1,17 @@
+---
+- name: Creating users with simple loops with Admin Access
+  hosts: web
+  tasks:
+    - name: Create 5 users
+      user:
+        name: "{{ item }}"
+        state: absent
+        groups: wheel
+      loop:
+        - azam1
+        - hassan1
+        - faizi1
+        - shahrukh1
+        - hussain1
+        - azaan1
+        - haider1

@@ -1,0 +1,10 @@
+---
+- name: Command line Variables
+  hosts: web
+  tasks:
+    - name: Creating user accounts
+      user:
+        name: "{{ user_name }}"
+        state: present
+        password: "{{ password | password_hash ('sha512') }}"
+...

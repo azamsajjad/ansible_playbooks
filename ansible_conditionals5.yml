@@ -1,0 +1,14 @@
+---
+- name: Ansible playbook to install vsftpd package through registered variable, not fact
+  hosts: web
+  become: true
+  tasks:
+    - name: print OS version from Node and store it in a variable
+      command: cat /etc/redhat-release
+      register: os_version
+    - debug:
+        var: os_version
+    - yum:
+        name: vsftpd
+        state: installed
+      when: os_version == '*9.1*'

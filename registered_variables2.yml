@@ -1,0 +1,16 @@
+---
+- name: Registering Variables
+  hosts: web
+  tasks:
+    - name: check hardware
+      command: uname -m
+      register: abc
+
+    - debug:
+        var: abc.stdout
+
+    - name: copy information over all the nodes
+      copy:
+        content: This is the hardware mode "{{ abc.stdout }}"
+        dest: /tmp/hwmode.txt
+

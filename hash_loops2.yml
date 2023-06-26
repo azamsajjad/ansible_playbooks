@@ -1,0 +1,22 @@
+---
+- name: Managing Complex Tasks with Nested Loops
+  hosts: web
+  tasks:
+    - name: adding the groups
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - admin1
+        - admin2
+        - admin3
+    - name: Creating users and adding them to multiple groups
+      user:
+        name: "{{ item.usr }}"
+        groups: "{{ item.grp }}"
+        state: present
+      with_items:
+        - { usr: azam4, grp: admin1 }
+        - { usr: hassan4, grp: admin3 }
+        - { usr: faizi4, grp: admin2 } 
+

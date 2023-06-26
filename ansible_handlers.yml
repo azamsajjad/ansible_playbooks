@@ -1,0 +1,32 @@
+---
+- name: install apache - add index.html - firewalld - enabled
+  hosts: web
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: present
+    - name: create index.html
+      copy:
+        content: "Azam Classes are awesome."
+        dest: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: 0644
+      notify:
+        - Add firewalld rule
+        - Start httpd
+  handlers:
+    - name: Start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: true
+    - name: Add firewalld rule
+      firewalld:
+        permanent: true
+        immediate: true
+        service: http
+        state: enabled
+...
+

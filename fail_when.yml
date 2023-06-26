@@ -1,0 +1,13 @@
+---
+- name: install apache on all servers except Redhat
+  hosts: all
+  tasks:
+    - name: Checking Operating System
+      debug:
+        msg: "Incompatible Operating System"
+      failed_when: ansible_distribution != "RedHat"
+    - name: install apache on Centos
+      yum:
+        name: httpd
+        state: installed
+      

@@ -1,0 +1,9 @@
+---
+- name: install apache on rhel and having version 9 or centos having version 8
+  hosts: web
+  tasks:
+    - name: install httpd
+      yum:
+        name: vsftpd
+        state: installed
+      when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version == '9') or (ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8') 

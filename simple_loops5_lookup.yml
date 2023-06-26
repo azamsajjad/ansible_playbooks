@@ -1,0 +1,10 @@
+---
+- name: Adding Users with help of Lookup file
+  hosts: web
+  tasks:
+    - name: adding users
+      user:
+        name: "{{ item }}"
+        state: absent
+        groups: wheel
+      with_lines: cat ~/automation/lookupusers.txt

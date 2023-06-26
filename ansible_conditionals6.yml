@@ -1,0 +1,11 @@
+---
+- name:
+  hosts: web
+  tasks:
+    - name: install vsftpd if memory is greater than 2Gb
+      yum:
+        name: vsftpd
+        state: installed
+      when: ansible_memtotal_mb < 2048
+...
+  

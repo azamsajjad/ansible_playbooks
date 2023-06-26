@@ -1,0 +1,16 @@
+---
+- name: Ansible jinja template with conditionals
+  hosts: web
+  vars:
+    fruits:
+      - mango
+      - banana
+      - orange
+      - grapes
+      - apple
+      - papaya
+  tasks:
+    - name: Using loop with jinj2 template
+      template:
+        src: ~/automation/templates/fruit_loop.j2
+        dest: /home/rupert/fruits.txt

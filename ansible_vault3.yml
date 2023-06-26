@@ -1,0 +1,5 @@
+---
+- name: Ansible Vault with password file
+  hosts: web
+  tasks:
+    - ping

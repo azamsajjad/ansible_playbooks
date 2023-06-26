@@ -1,0 +1,10 @@
+---
+- name: change SElinux mode in config file
+  hosts: RHEL
+  tasks:
+    - name: Changing SELinux mode in /etc/selinux/config
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX=permissive'
+...

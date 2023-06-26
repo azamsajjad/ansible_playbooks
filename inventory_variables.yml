@@ -1,0 +1,10 @@
+---
+- name: Example of variables defined in inventory file
+  hosts: web
+  tasks:
+    - name: Create new Directory
+      file:
+        path: "{{ dir }}"
+        state: directory
+    - debug:
+        msg: "{{ dir }}"

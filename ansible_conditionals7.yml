@@ -1,0 +1,17 @@
+---
+- name: Check file existence, if file is not present, then create it
+  hosts: web
+  tasks:
+    - name: Check file existance
+      stat:
+        path: /tmp/Nehraclasses.txt
+      register: NC
+    - debug:
+        var: NC.stat.exists
+    - name: Create a file
+      copy:
+        content: "Nehra Classes are apt."
+        dest: /tmp/Nehraclasses.txt
+      when: NC.stat.exists == false
+...
+

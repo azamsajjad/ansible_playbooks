@@ -1,0 +1,14 @@
+---
+- name: Simple user addition loop
+  hosts: web
+  tasks:
+    - name: Create 5 users
+      user:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - azam1
+        - hassan1
+        - faizi1
+        - shahrukh1
+

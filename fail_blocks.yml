@@ -1,0 +1,17 @@
+---
+- name: Ansible Block & Rescue Example
+  hosts: web
+  tasks:
+    - block:
+        - name: Install httpd
+          yum:
+            name: httpd
+            state: latest
+        - name: start httpd
+          service:
+            name: httpd
+            enabled: true
+            state: started
+      become: yes
+      when: ansible_facts['distribution'] == "RedHat"
+...

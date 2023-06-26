@@ -1,0 +1,17 @@
+---
+- name: Example of Command line Variables with Prompt
+  hosts: web
+  vars_prompt:
+      - name: user_name
+        prompt: please mention the username
+        private: no
+      - name: password
+        prompt: please mention the password
+        private: yes
+  tasks:
+    - name: to create user accounts
+      user:
+        name: "{{ user_name }}"
+        state: present
+        password: "{{ password | password_hash ('sha512') }}"
+...

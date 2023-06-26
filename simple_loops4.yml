@@ -1,0 +1,13 @@
+---
+- name:
+  hosts: web
+  vars_files:
+    - ~/automation/users.yml
+  tasks:
+    - name: creating multiple users
+      user:
+        name: "{{ item }}"
+        state: absent
+        groups: wheel
+      with_items:
+        - "{{ users }}"

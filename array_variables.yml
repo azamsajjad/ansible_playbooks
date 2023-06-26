@@ -1,0 +1,17 @@
+---
+- name: Example of listing type playbook variables
+  hosts: web
+  vars:
+    mypkgs:
+      - ftp
+      - vsftp
+      - zsh
+      - telnet
+      - httpd
+  tasks:
+    - name: Installing packages
+      yum: 
+        name: "{{ mypkgs [3] }}"
+        state: installed
+...
+# only install telnet
