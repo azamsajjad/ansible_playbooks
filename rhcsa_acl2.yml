@@ -1,0 +1,11 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: Touch a file, using symbolic modes to set permission 0644
+      file:
+        path: /tmp/aclfile
+        state: touch
+        mode: u=rw,g=r,o=r
+...

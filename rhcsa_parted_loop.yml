@@ -1,0 +1,30 @@
+---
+- name: create 2 partitions for lvm vol
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Create Partitions
+      parted:
+        device: "{{ item }}"
+        number: 1
+        part_end: 2GiB
+        label: msdos
+        flags: [lvm]
+        state: present
+      loop:
+        - /dev/nvme0n6
+        - /dev/nvme0n7
+    - name: partprobe
+      command: "partprobe"
+    - name: Create Volume Group
+      lvg:
+        pvs: /dev/nvme0n6p1,/dev/nvme0n7p1
+        vg: vg.ansible
+        state: present
+    - name: Create Logical volume
+      lvol:
+        vg: vg.ansible
+        lv: lv.ansible
+        size: 512m
+        state: present
+

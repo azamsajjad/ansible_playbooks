@@ -1,0 +1,30 @@
+---
+- name: firewalld rich rules
+  hosts: vmservers
+  become: yes
+  tasks:
+    - name: enable http https
+      firewalld:
+        zone: public
+        service: "{{ item }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+      loop:
+        - http
+        - https
+    - name: add port 8080-8084
+      firewalld:
+        zone: public
+        port: 8080-8084/tcp
+        permanent: yes
+        immediate: yes
+        state: disabled
+    - name: add rich rule
+      firewalld:
+        zone: public
+        rich_rule: rule family=ipv4 forward-port port=443 protocol=tcp to-port=8443
+        permanent: yes
+        immediate: yes
+        state: disabled
+

@@ -1,0 +1,10 @@
+---
+- name: create gpt partition
+  hosts: node1
+  become: true
+  tasks:
+    - name: Blank filesystem signature on /dev/nvme0n5p1
+      filesystem:
+        device: /dev/nvme0n5p1
+        state: absent
+

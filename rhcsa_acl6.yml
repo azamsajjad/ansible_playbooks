@@ -1,0 +1,13 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: Change access time of a directory
+      file:
+        path: /tmp/linuxdir
+        state: directory
+        modification_time: now
+        access_time: now
+...
+#if you write touch in state, it picks up mod time automatically, but in case of directory, you have to mention it

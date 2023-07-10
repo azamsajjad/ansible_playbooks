@@ -1,0 +1,13 @@
+---
+- name: create symbolic link
+  hosts: node1
+  become: true
+  tasks:
+    - name: create a symbolic link
+      file:
+        src: /etc/redhat-release
+        dest: /tmp/link
+        owner: rupert
+        group: rupert
+        state: link
+...

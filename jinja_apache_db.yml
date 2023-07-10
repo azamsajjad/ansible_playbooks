@@ -1,0 +1,52 @@
+---
+- name: apache template
+  hosts: node1
+  become: true
+  tasks:
+    - name: install apache
+      yum:
+        name: httpd
+        state: present
+    - name: configure index.html
+      template:
+        src: /home/ansible/automation/templates/index.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: 0644
+    - name: create users and add them to apache group
+      user:
+        name: "{{ item }}"
+        groups: apache
+      loop:
+        - will1
+        - fleck1
+    - name: start and enable apache
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name: install database
+  hosts: node1
+  become: yes
+  tasks:
+    - name: install postgresql
+      yum:
+        name: postgresql-server
+        state: latest
+    - name: initialize db server
+      command: /usr/bin/postgresql-setup --initdb
+    - name: create users for database
+      user:
+        name: "{{ item }}"
+        groups: postgres
+      loop:
+        - will2
+        - fleck2
+    - name: start and enable postgres-server
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+

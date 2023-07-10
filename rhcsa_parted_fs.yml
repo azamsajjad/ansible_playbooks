@@ -1,0 +1,12 @@
+---
+- name: create gpt partition
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create ext2 fs on /dev/nvme0n5
+      filesystem:
+        fstype: ext2
+        dev: /dev/nvme0n5p1
+        force: true
+...
+# force wipes and overwrites any previous filesystems

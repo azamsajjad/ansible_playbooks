@@ -1,0 +1,21 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: create a directory
+      file:
+        path: /tmp/acldirectory
+        state: directory
+      register: result
+    - name: Printing the result of the previous task
+      debug:
+        msg: "{{ result }}"
+    - name: RECURSIVELY CHANGE OWNERSHIP OF acldirectory
+      file:
+        path: /tmp/acldirectory
+        state: directory
+        recurse: yes
+        owner: rupert
+        group: rupert
+...

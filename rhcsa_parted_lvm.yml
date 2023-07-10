@@ -1,0 +1,13 @@
+---
+- name: parted for lvm
+  hosts: node1
+  become: true
+  tasks:
+    - name: create new partition for future lvm
+      parted:
+        device: /dev/nvme0n5
+        number: 2
+        flags: [ lvm ]
+        state: present
+        part_start: 3GiB
+        part_end: 4GiB

@@ -1,0 +1,13 @@
+---
+- name: managing file permissions using ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Touch again the same file, but do not change TIMES, this makes the task idempotent
+      file:
+        path: /tmp/linux.conf
+        state: touch
+        mode: g+w,o+w
+        modification_time: preserve
+        access_time: preserve
+

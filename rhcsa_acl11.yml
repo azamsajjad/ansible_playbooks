@@ -1,0 +1,14 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: Setting ACL for a USER, Another Method
+      acl:
+        path: /tmp/acldirectory
+        entry: default:user:faizi:rw-
+        state: present
+      register: acl_info
+    - name: Obtain acl for a specific file
+      debug:
+        msg: "{{ acl_info }}"

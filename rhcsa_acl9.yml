@@ -1,0 +1,13 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: grant user reason read access to a file
+      ansible.posix.acl:
+        path: /tmp/acldirectory
+        entity: azam
+        etype: user
+        permissions: r
+        state: present
+      

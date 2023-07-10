@@ -1,0 +1,11 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: Grant user faizi read write access
+      acl:
+        path: /tmp/acldirectory
+        entity: azam
+        etype: user
+        state: absent

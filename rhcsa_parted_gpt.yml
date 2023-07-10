@@ -1,0 +1,17 @@
+---
+- name: create gpt partition
+  hosts: node1
+  become: true
+  tasks:
+    - name: create gpt partition of 1Gb on a 10Gb disk
+      parted:
+        label: gpt
+        state: present
+        device: /dev/nvme0n5
+        number: 6
+        name: p1
+        flags: [ lvm ]
+        part_start: 0%
+        part_end: 10%
+        unit: '%'
+

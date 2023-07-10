@@ -1,0 +1,33 @@
+---
+- name: task sheduling
+  hosts: node1
+  become: yes
+  tasks:
+    - name: install at
+      yum:
+        name: at
+        state: latest
+      tags: at2
+    - name: start at
+      service:
+        name: atd
+        state: started
+        enabled: yes
+      tags: at2
+    - name: copy httpd errorlog
+      at:
+        command: cp /var/log/httpd/error_log /home/rupert
+        count: 10
+        units: minutes
+      tags: at3
+
+    - name: crontab
+      cron:
+        name: "weekly yum update"
+        minute: "*"
+        hour: "10"
+        month: "*"
+        weekday: "0"
+        user: root
+        state: present
+        job: "yum -y update"

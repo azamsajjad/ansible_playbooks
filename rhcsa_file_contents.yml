@@ -1,0 +1,31 @@
+---
+- name: file,lineinfile,copy,replace
+  hosts: node1
+  tasks:
+    - name: touch a new file
+      file:
+        path: /tmp/testfilecloud1
+        state: touch
+      tags: file1
+    - name: add line with copy
+      copy:
+        content: added by copy module
+        dest: /tmp/testfilecloud2
+      tags: file2
+    - name: line in file
+      lineinfile:
+        path: /tmp/testfilecloud3
+        line: added by lineinfile module
+        create: yes
+      tags: file3
+
+    - name: replace a line in testfile2
+      replace:
+        path: /tmp/testfilecloud2
+        regexp: '^added.*$'
+        replace: "line replaced by replace module"
+    - name: replace a line in testfile3
+      lineinfile:
+        path: /tmp/testfilecloud3
+        regexp: '.module$'
+        line: "line replaced by lineinfile module"

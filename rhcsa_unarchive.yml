@@ -1,0 +1,26 @@
+---
+- name: unarchive
+  become: true
+  hosts: node1
+  tasks:
+    - name: unarchive multifile
+      unarchive:
+        src: /home/rupert/unarchive/multi/multifile.tgz
+        dest: /home/rupert/unarchive/multi
+        remote_src: yes
+    - name: unpack globexclude.tgz
+      unarchive:
+        src: /home/rupert/unarchive/glob/globexclude.tgz
+        dest: /home/rupert/unarchive/glob
+        remote_src: yes
+    - name: unpack dir.tgz
+      unarchive:
+        src: /home/rupert/unarchive/dir/dir.tgz
+        dest: /home/rupert/unarchive/dir
+        remote_src: yes
+    - name: transfer playbooks
+      unarchive:
+        src: /home/ansible/automation/playbooks.tgz
+        dest: /home/rupert/
+        remote_src: no
+

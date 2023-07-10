@@ -1,0 +1,27 @@
+---
+- name: node1 archive
+  hosts: node1
+  become: yes
+  tasks:
+    - name: archive multiple files
+      archive:
+        path:
+          - /home/rupert/archive/testdir/testfile2
+          - /home/rupert/archive/testdir/testfile4
+          - /home/rupert/archive/testdir/testfile6
+        format: gz
+        dest: /home/rupert/unarchive/multi/multifile.tgz
+    - name: archive with wildcard
+      archive:
+        path: /home/rupert/archive/testdir/testfile*
+        exclude_path:
+          - /home/rupert/archive/testdir/testfile2
+          - /home/rupert/archive/testdir/testfile4
+        format: gz
+        dest: /home/rupert/unarchive/glob/globexclude.tgz
+    - name: archive a directory
+      archive:
+        path: /home/rupert/archive/testdir
+        format: gz
+        dest: /home/rupert/unarchive/dir/dir.tgz
+

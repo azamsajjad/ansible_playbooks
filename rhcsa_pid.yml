@@ -1,0 +1,23 @@
+---
+- name: process management using ansible
+  hosts: vmservers
+  become: yes
+  tasks:
+    - name: copying infinite loop to nodes
+      copy:
+        src: ~/infinite.sh
+        dest: /home/rupert/infinite.sh
+        owner: rupert
+        group: rupert
+        mode: '0755'
+    - name: Start infinite loop in the background
+      shell: nohup sh /home/rupert/infinite.sh &
+    - name: get running processes list from remote host
+      ignore_errors: yes
+      shell: "ps -few | grep infinite | awk '{print $2}' | head -1"
+      register: running_processes
+    - name: Printing the Process ID
+      debug:
+        msg: "{{ running_processes }}"
+    - name: Changing Priority of Infinite Process
+      shell: "renice +5 {{ running_processes.stdout }}"

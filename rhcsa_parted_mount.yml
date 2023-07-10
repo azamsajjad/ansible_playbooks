@@ -1,0 +1,12 @@
+---
+- name: create gpt partition
+  hosts: node1
+  become: true
+  tasks:
+    - name: Mount DVD Read-Only
+      mount:
+        path: /tmp
+        src: /dev/sr0
+        fstype: iso9660 #standard fstype for cdrom
+        opts: ro
+        state: mounted

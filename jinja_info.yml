@@ -1,0 +1,8 @@
+---
+- name: push jinja template to node1
+  hosts: node1
+  tasks:
+    - name: copy template
+      template:
+        src: /home/ansible/automation/templates/info.j2
+        dest: /tmp/info.txt

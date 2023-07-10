@@ -1,0 +1,11 @@
+---
+- name: file permissions
+  hosts: node1
+  become: true
+  tasks:
+    - name: create a hard link
+      file:
+        src: /etc/redhat-release
+        dest: /tmp/hardlink
+        state: hard
+...

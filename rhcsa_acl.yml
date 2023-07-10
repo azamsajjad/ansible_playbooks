@@ -1,0 +1,14 @@
+---
+- name: copy file with permissions
+  hosts: node1
+  tasks: 
+    - name: create the file
+      file:
+        path: /tmp/nehrastaff.txt
+        state: touch
+        owner: rupert
+        mode: 0755
+      register: ver
+    - name: Printing results to review
+      debug:
+        msg: "{{ ver }}"

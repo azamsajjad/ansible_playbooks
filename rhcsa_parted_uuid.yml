@@ -1,0 +1,10 @@
+---
+- name: create gpt partition
+  hosts: node1
+  become: true
+  tasks:
+    - name: set/reset xfs filesystem uuid on /dev/nvme0n5
+      filesystem:
+        fstype: xfs
+        dev: /dev/nvme0n5p1
+        uuid: generate

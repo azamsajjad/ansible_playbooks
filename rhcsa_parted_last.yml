@@ -1,0 +1,17 @@
+---
+- name: delete old partition and create new
+  hosts: node1
+  become: true
+  tasks:
+    - name: delete old partition
+      parted:
+        device: /dev/nvme0n5
+        number: 2
+        state: absent
+    - name: Create new partition with a size of 2GiB at disk's end
+      parted:
+        device: /dev/nvme0n5
+        number: 2
+        state: present
+        fs_type: ext3
+        part_start: -1GiB

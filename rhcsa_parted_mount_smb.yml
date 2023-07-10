@@ -1,0 +1,11 @@
+- name: Mount Ephemeral SMB Vloume
+  mount:
+    src: //192.168.100.101/share
+    path: /mnt/smb
+    opts: "rw,vers=3,file_mode=0600,dir_mode=0700,dom={{ ad_domain }},username={{ ad_username }},password={{ ad_passwod }}"
+    fstype: cifs
+    state: ephemeral
+
+
+
+

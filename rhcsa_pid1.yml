@@ -1,0 +1,23 @@
+---
+- name: copy infinite file to nodes 
+  hosts: node1
+  tasks:
+    - name: Copy file first
+      copy:
+        src: /home/ansible/infinite.sh
+        dest: /home/rupert/infinite.sh
+        owner: rupert
+        group: rupert
+        mode: '0755'
+    - name: start the process in the background
+      shell: nohup sh sleep 500 &
+    - name: Get running processes list from remote host
+      ignore_errors: yes
+      shell: "ps -few | grep sleep | awk '{print $2}' | head -1"
+      register: running_process
+    - name: Print running process on the screen
+      debug:
+        msg: "{{ running_process }}"
+    - name: change priority of the process
+      shell: "renice +5 {{ running_process.stdout }}"
+...
