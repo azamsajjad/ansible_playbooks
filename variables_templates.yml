@@ -1,0 +1,61 @@
+---
+- name: Setup a Webserver on Node 3
+  hosts: node3
+  become: yes
+  vars:
+    content_dir: /webcontent
+    http_port: 8080
+    admin: rupert
+  tasks:
+    - name: create a folder with correct selinux contexts
+      file:
+        path: /webcontent
+        state: directory
+        owner: apache
+        group: apache
+        mode: 0644
+    - name: selinux
+      sefcontext:
+        target: '/webcontent(/.*)?'
+        state: present
+        setype: httpd_sys_content_t
+    - name: restorecon
+      command: restorecon -irv /webcontent
+
+    - name: copy template as conf file
+      template:
+        src: /home/ansible/automation/templates/httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+        backup: yes
+      notify: "restart apache"
+
+    - name: edit firewall
+      firewalld:
+        port: 8080/tcp
+        permanent: yes
+        immediate: yes
+        state: enabled
+      notify: "restart firewall"
+    
+    - name: copy index.html
+      template:
+        src: /home/ansible/automation/templates/index.html.j2
+        dest: /webcontent/index.html
+        owner: apache
+        group: apache
+
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
+      listen: "restart apache"
+    - name: restart firewall
+      service:
+        name: firewalld
+        state: restarted
+      listen: "restart firewall"
+
+
+

@@ -1,0 +1,31 @@
+---
+- hosts: node1
+  become: yes
+  tasks:
+    - name: create groups
+      group:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - hr
+        - eng
+    - name: create user zach
+      user:
+        name: zach
+        comment: zacharia
+        shell: /bin/sh
+        groups: hr,eng
+        append: yes
+        state: absent
+        remove: yes
+    - name: create kelly
+      user:
+        name: "{{ item }}"
+        state: absent
+        remove: yes
+      loop:
+        - will1
+        - will2
+        - fleck1
+        - fleck2
+

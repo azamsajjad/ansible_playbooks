@@ -1,0 +1,17 @@
+---
+- name: copy epel
+  hosts: vmservers
+  become: yes
+  tasks:
+    - name: copy epel
+      copy:
+        src: /etc/yum.repos.d/epel.repo
+        dest: /etc/yum.repos.d/epel.repo
+    - name: clean all
+      command: 'yum clean all'
+    - name: repolist
+      command: 'yum repolist --enabled'
+      register: abc
+    - debug:
+        msg: "{{ abc }}"
+

@@ -1,0 +1,10 @@
+---
+- name: MOTD file creation
+  hosts: node3
+  become: true
+  tasks:
+    - name: copy j2
+      template:
+        src: /home/ansible/automation/templates/server3.j2
+        dest: /etc/motd
+
