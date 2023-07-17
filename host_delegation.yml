@@ -1,0 +1,16 @@
+---
+- name: host_delegation
+  hosts: node1
+  tasks:
+    - name: check apache web server hosted on node1
+      uri:
+        url: http://{{ ansible_default_ipv4['address'] }}
+        method: GET
+        status_code: 200
+        timeout: 30
+        return_content: yes
+      delegate_to: localhost
+      register: webresult
+    - name: debug
+      debug:
+        var: webresult  

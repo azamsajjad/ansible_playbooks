@@ -1,0 +1,14 @@
+---
+- name: add users from a file
+  hosts: node3
+  become: true
+  vars_files:
+    - /home/ansible/automation/files/users_to_add.yml
+  tasks:
+    - name: create users
+      user:
+        name: "{{ item.name }}"
+        state: present
+        uid: "{{ item.uid }}"
+        comment: "{{ item.comment }}"
+      with_items: "{{ users }}"
