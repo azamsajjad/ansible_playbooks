@@ -1,0 +1,14 @@
+---
+- name: install ansible
+  hosts: localhost
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: present
+      register: result
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+      when: result.changed
