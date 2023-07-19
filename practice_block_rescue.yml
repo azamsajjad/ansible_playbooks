@@ -1,0 +1,20 @@
+---
+- name: block rescue always
+  hosts: node1
+  become: true
+  tasks:
+    - name: block example
+      block:
+        - name: download file
+          get_url:
+            url: https://drive.google.com/file/d/1W2Pl6eyqzW9e5XIt9eXiO8763HJbsKSf/view?usp=drive_link
+            dest: /home/rupert/devops
+        - debug:
+            msg: "Download Successful"
+      rescue:
+        - debug:
+            msg: "Link was down"
+      always:
+        - debug:
+            msg: "task was attempted successfully"
+
