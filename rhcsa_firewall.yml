@@ -1,0 +1,73 @@
+---
+- name: Manage firewall
+  hosts: node1
+  become: true
+  tasks:
+    - name: permit traffic in default zone for https service
+      firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: allow ospf protocol
+      firewalld:
+        protocol: ospf
+        permanent: true
+        state: enabled
+
+    - name: 
+      firewalld:
+        port: 8081/tcp
+        state: disabled
+
+    - name: Allow traffic from udp ports 161 & 162 in the firewall 
+      firewalld:
+        zone: dmz
+        port: 161-162/udp
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - name: allow http traffic from dmz zone
+      firewalld:
+        zone: dmz
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: allow rich rule
+      firewalld:
+        rich_rule: rule service name="ftp" audit limit value="1/m" accept
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: change interface
+      firewalld:
+        zone: trusted
+        interface: lo
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: add custome zone
+      firewalld:
+        zone: custom
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: enable masquerade
+      firewalld:
+        masquerade: true
+        zone: dmz
+        state: enabled
+        permanent: true
+        immediate: true
+
+
+
+
+
