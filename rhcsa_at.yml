@@ -1,0 +1,34 @@
+---
+- name: schedule future jobs
+  hosts: node1
+  become: true
+  tasks:
+    - name: schedule a command to execute in 1 minutes as root
+      at:
+        command: lsblk > /tmp/lsblk.txt
+        count: 5
+        units: minutes
+
+    - name: schedule a command to execute in 3 days as root
+      at:
+        command: uptime > /tmp/uptime.txt
+        count: 3
+        units: days
+
+    - name: remove a task
+      at:
+        command: uptime > /tmp/uptime.txt
+        state: absent
+
+    - name: see current jobs
+      command: "atq"
+      register: atq
+
+    - debug: msg={{ atq }}
+
+    - name: schedule a task to execute in 20 minutes making sure it is unique in the queue
+      at:
+        command: ls -d > /dev/null
+        count: 20
+        units: minutes
+        unique: true

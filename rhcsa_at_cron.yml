@@ -1,0 +1,35 @@
+---
+- name: schedule future jobs
+  hosts: node1
+  become: true
+  tasks:
+    - name: Capture the users login information in /tmp/login.txt file at 2 & 5 hour daily
+      cron:
+        name: "Users Login"
+        minute: "0"
+        hour: "2,5"
+        job: "who > /tmp/login.txt"
+
+    - name: show who is logged on and what they are doing at system reboot
+      cron:
+        name: "System info"
+        special_time: reboot
+        job: "w > /tmp/systeminfo.txt"
+
+    - name: create a cron file under /etc/cron.d with result of yum auto update
+      cron:
+        name: yum autoupdate
+        weekday: "2"
+        minute: "0"
+        hour: "12"
+        user: root
+        job: "YUMINTERACTIVE=0 /usr/sbin/yum-autoupdate"
+        cron_file: ansible_yum-autoupdate
+
+    - name: removes a cron file under /etc/cron.d
+      cron:
+        name: yum autoupdate
+        cron_file: ansible_yum-autoupdate
+        state: absent
+
+
