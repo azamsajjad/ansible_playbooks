@@ -1,0 +1,11 @@
+---
+- name: Dictionary Variables Example
+  hosts: node1
+  vars_files:
+    - /home/ansible/automation/files/dictionary_variables.yml 
+  tasks:
+    - name: debugging
+      debug:
+        msg:
+          - "{{ professors }}"
+          - "{{ student }}"

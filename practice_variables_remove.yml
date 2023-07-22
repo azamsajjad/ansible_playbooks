@@ -1,0 +1,14 @@
+---
+- name: users to remove
+  hosts: node3
+  become: true
+  vars_files:
+    - /home/ansible/automation/files/users_to_add.yml
+  tasks:
+    - name: remove users
+      user:
+        name: "{{item.name}}"
+        comment: "{{item.comment}}"
+        uid: "{{item.uid}}"
+        state: absent
+      with_items: "{{users}}"

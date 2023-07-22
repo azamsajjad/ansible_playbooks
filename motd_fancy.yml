@@ -1,0 +1,9 @@
+---
+- name: deploy motd fancy
+  hosts: vmservers
+  become: true
+  tasks:
+    - name: deploy via template
+      template:
+        src: ~/automation/files/motd.j2
+        dest: /etc/motd
